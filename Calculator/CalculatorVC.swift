@@ -41,7 +41,7 @@ class CalculatorVC: UIViewController {
             userIsInTheMiddleOfTyping = false
         }
         if let mathematicalSymbol = sender.currentTitle {
-            brain.performOperation(operation: mathematicalSymbol)
+            brain.performOperation(symbol: mathematicalSymbol)
         }
         displayValue = brain.result
     }
