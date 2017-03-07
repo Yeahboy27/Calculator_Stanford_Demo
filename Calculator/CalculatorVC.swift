@@ -10,9 +10,10 @@ import UIKit
 
 class CalculatorVC: UIViewController {
     
-    @IBOutlet weak var display: UILabel!
+    @IBOutlet private weak var display: UILabel!
     
-    var displayValue : Double {
+    private var userIsInTheMiddleOfTyping = false
+    private var displayValue : Double {
         get {
             return Double(display.text!) ?? 0
         }
@@ -20,19 +21,8 @@ class CalculatorVC: UIViewController {
             display.text = String(newValue)
         }
     }
-    var userIsInTheMiddleOfTyping = false
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    @IBAction func touchDigit(_ sender: UIButton) {
+    @IBAction private func touchDigit(_ sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTyping {
             let textCurrentlyInDisplay = display.text!
@@ -43,14 +33,17 @@ class CalculatorVC: UIViewController {
         userIsInTheMiddleOfTyping = true
     }
     
-    @IBAction func performOperator(_ sender: UIButton) {
-        userIsInTheMiddleOfTyping = false
-        let mathematicalSymbol = sender.currentTitle!
-        if mathematicalSymbol == "π" {
-            displayValue = .pi
-        } else if mathematicalSymbol == "√" {
-            displayValue = sqrt(displayValue)
+    private var brain = CalculatorBrain()
+    
+    @IBAction private func performOperator(_ sender: UIButton) {
+        if userIsInTheMiddleOfTyping {
+            brain.setOperand(operand: displayValue)
+            userIsInTheMiddleOfTyping = false
         }
+        if let mathematicalSymbol = sender.currentTitle {
+            brain.performOperation(operation: mathematicalSymbol)
+        }
+        displayValue = brain.result
     }
 
 
