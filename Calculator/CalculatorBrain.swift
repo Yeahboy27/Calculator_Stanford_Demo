@@ -13,20 +13,27 @@ import Foundation
 class CalculatorBrain {
     
     private var accumulator = 0.0
-    var operation: Dictionary <String, Double> = [
-        "π": .pi,
-        "e": M_E,
-        "√": sqrt, // TODO: xuất hiện 1 vấn đề ở đây là operation của chúng ta không chỉ là số, mà còn là các phép tính toán nữa. Bạn hãy thử nghĩ cách làm thế nào để có thể nhét 1 function vào dictionary này?
-        "cos": cos
+    var operations: Dictionary <String, Operation> = [
+        "π": .constant, //.pi
+        "e": .constant, // M_E
+        "√": .unaryOperation, // sqrt
+        "cos": .unaryOperation, //cos
     ]
+    
+    enum Operation {
+        case constant
+        case unaryOperation
+        case binaryOperation
+        case equals
+    }
     
     func setOperand(operand: Double) {
         accumulator = operand
     }
     
     func performOperation(symbol: String) {
-        // TODO: Quiz: Tại sao operation không có chứa 1 optional nào nhưng kết quả trả ra của Opration[symbol] lại là 1 optional
-        if let constant = operation[symbol] {
+        // TODO: Answer Quiz: cần binding Bởi vì dictionary có thể không có chưa key như symbol, và kết quả trả ra là nil
+        if let constant = operations[symbol] {
             accumulator = constant
         }
         switch symbol {
