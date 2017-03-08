@@ -32,10 +32,9 @@ class CalculatorBrain {
         "e": .constant(M_E),
         "√": .unaryOperation(sqrt),
         "cos": .unaryOperation(cos),
-        // Move func multiply to here
-        "×" : .binaryOperation(func multiply(_ first: Double, _ second: Double) -> Double {
-            return first * second
-    }),
+        // xoá func multify và di chuyển vị trí dấu {
+        "×" : .binaryOperation({(first: Double,second: Double) -> Double in
+            return first * second }),
         "÷" : .binaryOperation(div),
         "+" : .binaryOperation(add),
         "-" : .binaryOperation(sub),
