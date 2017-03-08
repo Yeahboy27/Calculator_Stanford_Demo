@@ -44,6 +44,7 @@ class CalculatorVC: UIViewController {
             brain.performOperation(operation: mathematicalSymbol)
         }
         displayValue = brain.result
+        print("display")
     }
 
 
