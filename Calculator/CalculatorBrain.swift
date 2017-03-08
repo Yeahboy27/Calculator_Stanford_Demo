@@ -32,8 +32,8 @@ class CalculatorBrain {
         "e": .constant(M_E),
         "√": .unaryOperation(sqrt),
         "cos": .unaryOperation(cos),
-        // xoá func multify và di chuyển vị trí dấu {
-        "×" : .binaryOperation({(first: Double,second: Double) -> Double in
+        // Do giá trị đầu vào của binaryOpration là 1 function đã có định nghĩa trước, nên vì vậy kiểu của parameter truyền vào và kiểu giá trị trả ra ko cần phải định nghĩa, Swift có thể tự hiểu được nó là loại nào.
+        "×" : .binaryOperation({(first,second) in
             return first * second }),
         "÷" : .binaryOperation(div),
         "+" : .binaryOperation(add),
