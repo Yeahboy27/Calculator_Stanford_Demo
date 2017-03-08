@@ -10,9 +10,6 @@ import Foundation
 
 // Chú ý: Model chỉ chứa dữ liệu, không bao giờ chứa giao diện nên nhất định ko được import UIKit vào đây
 
-func multiply(_ first: Double, _ second: Double) -> Double {
-    return first * second
-}
 
 func div(_ first: Double, _ second: Double) -> Double {
     return first / second
@@ -35,7 +32,10 @@ class CalculatorBrain {
         "e": .constant(M_E),
         "√": .unaryOperation(sqrt),
         "cos": .unaryOperation(cos),
-        "×" : .binaryOperation(multiply),
+        // Move func multiply to here
+        "×" : .binaryOperation(func multiply(_ first: Double, _ second: Double) -> Double {
+            return first * second
+    }),
         "÷" : .binaryOperation(div),
         "+" : .binaryOperation(add),
         "-" : .binaryOperation(sub),
