@@ -10,20 +10,6 @@ import Foundation
 
 // Chú ý: Model chỉ chứa dữ liệu, không bao giờ chứa giao diện nên nhất định ko được import UIKit vào đây
 
-
-func div(_ first: Double, _ second: Double) -> Double {
-    return first / second
-}
-
-func sub(_ first: Double, _ second: Double) -> Double {
-    return first - second
-}
-
-func add(_ first: Double, _ second: Double) -> Double {
-    return first + second
-}
-
-
 class CalculatorBrain {
     
     private var accumulator = 0.0
@@ -32,12 +18,18 @@ class CalculatorBrain {
         "e": .constant(M_E),
         "√": .unaryOperation(sqrt),
         "cos": .unaryOperation(cos),
-        // Do giá trị đầu vào của binaryOpration là 1 function đã có định nghĩa trước, nên vì vậy kiểu của parameter truyền vào và kiểu giá trị trả ra ko cần phải định nghĩa, Swift có thể tự hiểu được nó là loại nào.
-        "×" : .binaryOperation({(first,second) in
-            return first * second }),
-        "÷" : .binaryOperation(div),
-        "+" : .binaryOperation(add),
-        "-" : .binaryOperation(sub),
+        
+        // do các tham số truyền vào có vẻ cũng không cần thiết phải có tên do Swift có thể hiểu được giá trị truyền vào dựa trên vị trí của nó vì vậy first và second được thay thế bằng $0, $1.
+        
+        // Nhưng trông nó vẫn thừa và lặp nội dung. vì vậy xoá nốt phần khai báo. chỉ cần trả về kết quả là lấy phần tử thứ 1 nhân phần tử thứ 2
+        
+        
+        "×" : .binaryOperation({ $0 * $1 }),
+        
+        // áp dụng tương tự
+        "÷" : .binaryOperation({$0 / $1}),
+        "+" : .binaryOperation({$0 + $1}),
+        "-" : .binaryOperation({$0 - $1}),
         "=": .equals
     ]
     
